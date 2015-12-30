@@ -3,6 +3,7 @@ python:
   - "3.3"
   - "3.4"
 install: 
+  - "pip install requests"
   - "pip install -r requirements-testing.txt --use-mirrors"
   - "pip install coveralls"
   - "python setup.py install"
