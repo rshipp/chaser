@@ -13,6 +13,9 @@ setup(
     version=__version__,
     packages=['chaser'],
     scripts=['pkgvars.sh', 'pkgvars.py'],
+    entry_points = {
+        'console_scripts': ['chaser = chaser:main'],
+    },
     include_package_data=True,
     install_requires=[],
     license='BSD',
