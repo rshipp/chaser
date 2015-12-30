@@ -3,12 +3,13 @@ import tarfile
 import subprocess
 import json
 import re
+import os
 
 import requests
 from toposort import toposort_flatten
 import ccr
 
-from chaser import pacman
+from chaser import pacman, prompt
 
 def get_source_files(pkgname, workingdir):
     """Download the source tarball and extract it"""
@@ -53,3 +54,21 @@ def dependency_chain(pkgname):
     """Return an ordered list of dependencies for a package"""
     depends = recurse_depends(pkgname)
     return toposort_flatten(depends)
+
+def install(pkgname):
+    """Install a given package"""
+    editor = os.getenv('EDITOR')
+    for package in dependency_chain(pkgname):
+        # Ask to edit the PKGBUILD
+        response = prompt.prompt("Edit {pkg} PKGBUILD with $EDITOR?".format(pkg=package))
+        if response == prompt.YES:
+            subprocess.call([editor, "./{pkg}/PKGBUILD".format(pkg=package)])
+        # Ask to edit the .install, if it exists
+        if os.path.isfile("./{pkg}/{pkg}.install".format(pkg=package)):
+            response = prompt.prompt("Edit {pkg},install with $EDITOR?".format(pkg=package))
+            if response == prompt.YES:
+                subprocess.call([editor, "./{pkg}/{pkg}.install".format(pkg=package)])
+        # makepkg -i
+        os.chdir(pkgname)
+        subprocess.call(["makepkg", "-i"])
+        os.chdir(os.pardir)
