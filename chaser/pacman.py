@@ -11,6 +11,5 @@ def exists(pkgname):
     try:
         return subprocess.check_output(['pacman', '-Sp', '--print-format',
             '%n', pkgname], stderr=subprocess.DEVNULL).split().pop()
-                
     except subprocess.CalledProcessError:
         return False
