@@ -12,6 +12,7 @@ setup(
     name='chaser',
     version=__version__,
     packages=['chaser'],
+    scripts=['pkgvars.sh', 'pkgvars.py'],
     include_package_data=True,
     install_requires=[],
     license='BSD',
