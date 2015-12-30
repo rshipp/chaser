@@ -65,7 +65,7 @@ def install(pkgname):
             subprocess.call([editor, "./{pkg}/PKGBUILD".format(pkg=package)])
         # Ask to edit the .install, if it exists
         if os.path.isfile("./{pkg}/{pkg}.install".format(pkg=package)):
-            response = prompt.prompt("Edit {pkg},install with $EDITOR?".format(pkg=package))
+            response = prompt.prompt("Edit {pkg}.install with $EDITOR?".format(pkg=package))
             if response == prompt.YES:
                 subprocess.call([editor, "./{pkg}/{pkg}.install".format(pkg=package)])
         # makepkg -i
