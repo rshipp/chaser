@@ -11,7 +11,7 @@ import ccr
 
 from chaser import pacman, prompt
 
-def get_source_files(pkgname, workingdir):
+def get_source_files(pkgname, workingdir="."):
     """Download the source tarball and extract it"""
     r = requests.get(ccr.getpkgurl(pkgname))
     tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
