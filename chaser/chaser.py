@@ -17,6 +17,7 @@ def get_source_files(pkgname, workingdir):
     tar.extractall(workingdir)
 
 def recurse_depends(pkgname, graph=None):
+    """Build a dependency graph"""
     if graph is None:
         graph = {}
 
