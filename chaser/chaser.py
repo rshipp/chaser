@@ -72,3 +72,41 @@ def install(pkgname):
         os.chdir(pkgname)
         subprocess.call(["makepkg", "-i"])
         os.chdir(os.pardir)
+
+def check_updates():
+    """Return list of (name, ver) tuples for packages with updates available"""
+    installed = pacman.list_unofficial()
+    updates = []
+    for pkg in installed:
+        pkgname, curver = pkg
+        try:
+            get_source_files(pkgname)
+        except tarfile.ReadError:
+            # Package not found
+            continue
+        output = subprocess.check_output(["pkgvars.sh",
+            "./{pkgname}/PKGBUILD".format(pkgname=pkgname)])
+        data = json.loads(output.decode())['variables']
+        pkgver = data.get('pkgver', 0)
+        pkgrel = data.get('pkgrel', 0)
+        newver = "{v}-{r}".format(v=pkgver, r=pkgrel)
+        if pkgver > curver.split('-')[0]:
+            updates.append((pkgname, newver))
+        elif pkgver == curver.split('-')[0] and pkgrel > curver.split('-')[1]:
+            updates.append((pkgname, newver))
+
+    return updates
+
+def list_updates():
+    """List currently installed unofficial packages in `name ver` format"""
+    for name, ver in check_updates():
+        print(name, ver)
+
+def update():
+    """Install updates"""
+    updates = check_updates()
+    print("Updates: {pkgs}".format(pkgs='  '.join([ '-'.join(p) for p in updates ])))
+    response = prompt.prompt("Continue with installation?")
+    if response == prompt.YES:
+        for name, ver in updates:
+            install(name)

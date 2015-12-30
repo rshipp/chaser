@@ -13,3 +13,7 @@ def exists(pkgname):
             '%n', pkgname], stderr=subprocess.DEVNULL).split().pop()
     except subprocess.CalledProcessError:
         return False
+
+def list_unofficial():
+    return [ l.split() for l in subprocess.check_output(['pacman',
+        '-Qm']).decode().strip().split('\n') ]

@@ -1,4 +1,4 @@
-__version__ = "0.1"
+__version__ = "0.3"
 
 import argparse
 
@@ -16,5 +16,14 @@ def main():
     parser_i.add_argument('package')
     parser_i.set_defaults(func=chaser.install)
 
+    parser_u = subparsers.add_parser('listupdates')
+    parser_u.set_defaults(func=chaser.list_updates)
+
+    parser_u = subparsers.add_parser('update')
+    parser_u.set_defaults(func=chaser.update)
+
     args = parser.parse_args()
-    args.func(args.package)
+    try:
+        args.func(args.package)
+    except AttributeError:
+        args.func()
