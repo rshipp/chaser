@@ -17,10 +17,10 @@ def get_source_files(pkgname, workingdir):
 
 def _depends(pkgname):
     get_source_files(pkgname, ".")
-    output = subprocess.run(["pkgvars.sh", "./{pkgname}".format(pkgname=pkgname)],
-            stdout=subprocess.PIPE)
-    data = json.loads(output)['variables']
-    return data['makedepends'] + data['depends']
+    output = subprocess.check_output(["pkgvars.sh",
+        "./{pkgname}/PKGBUILD".format(pkgname=pkgname)])
+    data = json.loads(output.decode())['variables']
+    return data.get('makedepends', []) + data.get('depends', [])
 
 def dependency_chain(pkgname):
     """Return an ordered list of dependencies for a package"""
