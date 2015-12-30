@@ -16,13 +16,13 @@ class TestPacman(unittest.TestCase):
         self.assertEquals(False, pacman.exists("test"))
 
     def test_is_installed(self):
+        pacman.exists = lambda x: "test"
         subprocess.call = lambda x, **_: 0
+        self.assertEquals(True, pacman.is_installed("test"))
+
+        pacman.exists = lambda x: False
         self.assertEquals(True, pacman.is_installed("test"))
 
     def test_not_installed(self):
         subprocess.call = lambda x, **_: 1
-        self.assertEquals(False, pacman.is_installed("test"))
-        subprocess.call = lambda x, **_: 0
-
-        pacman.exists = lambda x: False
         self.assertEquals(False, pacman.is_installed("test"))

@@ -2,10 +2,10 @@ import subprocess
 
 def is_installed(pkgname):
     realname = exists(pkgname)
-    if realname:
-        return not subprocess.call(['pacman', '-Qi', realname],
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    return False
+    if not realname:
+        realname = pkgname
+    return not subprocess.call(['pacman', '-Qi', realname],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def exists(pkgname):
     try:
