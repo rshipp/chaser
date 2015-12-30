@@ -8,7 +8,7 @@ import requests
 from toposort import toposort_flatten
 import ccr
 
-import pacman
+from chaser import pacman
 
 def get_source_files(pkgname, workingdir):
     """Download the source tarball and extract it"""
