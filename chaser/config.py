@@ -1,9 +1,12 @@
 import os
 import configparser
 
-CONFIG = os.path.expanduser("~/.config/chaserrc")
+CONFDIR = os.path.expanduser("~/.config/")
+CONFIG = os.path.join(CONFDIR, "chaserrc")
 
 def create():
+    if not os.path.isdir(CONFDIR):
+        os.mkdir(CONFDIR)
     with open(CONFIG, "w+") as f:
         f.write("[Options]\n")
         f.write("BuildDir = ~/ccr\n")
