@@ -14,10 +14,11 @@ class TestChaser(unittest.TestCase):
             self.assertTrue(os.path.isfile(os.path.join(d, 'aur2ccr', 'PKGBUILD')))
 
     def test_recurse_depends(self):
-        old = (chaser.BUILD_DIR, pacman.is_installed)
+        old = (chaser.BUILD_DIR, pacman.is_installed, pacman.exists)
         with tempfile.TemporaryDirectory() as d:
             chaser.BUILD_DIR = d
             pacman.is_installed = lambda x: False
+            pacman.exists = lambda x: False if x in ["abs", "aur2ccr"] else True
             expected = {
                 'abs': set(['bash', 'rsync']),
                 'aur2ccr': set([
@@ -44,7 +45,7 @@ class TestChaser(unittest.TestCase):
             self.assertEquals(expected, chaser.recurse_depends('aur2ccr'))
             pacman.is_installed = lambda x: True
             self.assertEquals({'aur2ccr': set()}, chaser.recurse_depends('aur2ccr'))
-        chaser.BUILD_DIR, pacman.is_installed = old
+        chaser.BUILD_DIR, pacman.is_installed, pacman.exists = old
 
     def test_dependency_chain(self):
         old = chaser.recurse_depends
