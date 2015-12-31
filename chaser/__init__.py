@@ -27,4 +27,7 @@ def main():
     parser_s.set_defaults(func=chaser.search)
 
     args = parser.parse_args()
-    args.func(args)
+    try:
+        args.func(args)
+    except AttributeError:
+        print("No operation specified")
