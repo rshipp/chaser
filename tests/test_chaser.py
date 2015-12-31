@@ -1,9 +1,24 @@
 import unittest
+import subprocess, os
 
 from chaser import chaser, pacman, prompt
 import ccr
 
 class TestChaser(unittest.TestCase):
+
+    def test_smoke_install(self):
+        old = (chaser.dependency_chain, chaser.get_source_files,
+                prompt.prompt, subprocess.call, os.chdir, os.path.isfile)
+        chaser.dependency_chain = lambda x: [x]
+        chaser.get_source_files = lambda x: None
+        prompt.prompt = lambda x: prompt.YES
+        subprocess.call = lambda x: None
+        os.chdir = lambda x: None
+        os.path.isfile = lambda x: True
+
+        chaser.install("test")
+
+        chaser.dependency_chain, chaser.get_source_files, prompt.prompt, subprocess.call, os.chdir, os.path.isfile = old
 
     def test_check_updates(self):
         old = (pacman.list_unofficial, ccr.info)
