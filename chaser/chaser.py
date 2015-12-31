@@ -80,16 +80,11 @@ def check_updates():
     for pkg in installed:
         pkgname, curver = pkg
         try:
-            get_source_files(pkgname)
-        except tarfile.ReadError:
-            # Package not found
+            data = ccr.info(pkgname)
+        except ccr.ccr.PackageNotFound:
             continue
-        output = subprocess.check_output(["pkgvars.sh",
-            "./{pkgname}/PKGBUILD".format(pkgname=pkgname)])
-        data = json.loads(output.decode())['variables']
-        pkgver = data.get('pkgver', 0)
-        pkgrel = data.get('pkgrel', 0)
-        newver = "{v}-{r}".format(v=pkgver, r=pkgrel)
+        newver = data.get('Version', '0-0')
+        pkgver, pkgrel = newver.split('-')
         if pkgver > curver.split('-')[0]:
             updates.append((pkgname, newver))
         elif pkgver == curver.split('-')[0] and pkgrel > curver.split('-')[1]:
