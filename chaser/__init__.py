@@ -16,14 +16,15 @@ def main():
     parser_i.add_argument('package')
     parser_i.set_defaults(func=chaser.install)
 
-    parser_u = subparsers.add_parser('listupdates')
-    parser_u.set_defaults(func=chaser.list_updates)
+    parser_l = subparsers.add_parser('listupdates')
+    parser_l.set_defaults(func=chaser.list_updates)
 
     parser_u = subparsers.add_parser('update')
     parser_u.set_defaults(func=chaser.update)
 
+    parser_s = subparsers.add_parser('search')
+    parser_s.add_argument('query')
+    parser_s.set_defaults(func=chaser.search)
+
     args = parser.parse_args()
-    try:
-        args.func(args.package)
-    except AttributeError:
-        args.func()
+    args.func(args)

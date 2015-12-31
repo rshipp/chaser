@@ -11,8 +11,13 @@ import ccr
 
 from chaser import pacman, prompt
 
-def get_source_files(pkgname, workingdir="."):
+def get_source_files(args, workingdir="."):
     """Download the source tarball and extract it"""
+    try:
+        pkgname = args.package
+    except AttributeError:
+        pkgname = args
+
     r = requests.get(ccr.getpkgurl(pkgname))
     tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
     tar.extractall(workingdir)
@@ -55,8 +60,13 @@ def dependency_chain(pkgname):
     depends = recurse_depends(pkgname)
     return toposort_flatten(depends)
 
-def install(pkgname):
+def install(args):
     """Install a given package"""
+    try:
+        pkgname = args.package
+    except AttributeError:
+        pkgname = args
+
     editor = os.getenv('EDITOR')
     for package in dependency_chain(pkgname):
         # Ask to edit the PKGBUILD
@@ -73,7 +83,7 @@ def install(pkgname):
         subprocess.call(["makepkg", "-i"])
         os.chdir(os.pardir)
 
-def check_updates():
+def check_updates(args):
     """Return list of (name, ver) tuples for packages with updates available"""
     installed = pacman.list_unofficial()
     updates = []
@@ -92,12 +102,12 @@ def check_updates():
 
     return updates
 
-def list_updates():
+def list_updates(args):
     """List currently installed unofficial packages in `name ver` format"""
     for name, ver in check_updates():
         print(name, ver)
 
-def update():
+def update(args):
     """Install updates"""
     updates = check_updates()
     print("Updates: {pkgs}".format(pkgs='  '.join([ '-'.join(p) for p in updates ])))
@@ -105,3 +115,16 @@ def update():
     if response == prompt.YES:
         for name, ver in updates:
             install(name)
+
+def search(args):
+    """Print search results"""
+    try:
+        query = args.query
+    except AttributeError:
+        query = args
+
+    results = ccr.search(query)
+    results.sort(key=lambda x: x['Name'])
+    for pkg in results:
+        print("ccr/{name} {ver}".format(name=pkg.Name, ver=pkg.Version))
+        print("    {desc}".format(desc=pkg.Description))
