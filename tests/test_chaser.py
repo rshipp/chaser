@@ -6,6 +6,18 @@ import ccr
 
 class TestChaser(unittest.TestCase):
 
+    def test_dependency_chain(self):
+        old = chaser.recurse_depends
+        graph = {
+            'a': set(['b']),
+            'b': set(['c']),
+            'c': set(),
+            'd': set(['a', 'b']),
+        }
+        chaser.recurse_depends = lambda x: graph
+        self.assertEquals(['c', 'b', 'a', 'd'], chaser.dependency_chain('d'))
+        chaser.recurse_depends = old
+
     def test_smoke_install(self):
         old = (chaser.dependency_chain, chaser.get_source_files,
                 prompt.prompt, subprocess.call, os.chdir, os.path.isfile)
