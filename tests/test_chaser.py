@@ -1,10 +1,17 @@
 import unittest
-import subprocess, os
+import subprocess
+import os
+import tempfile
 
 from chaser import chaser, pacman, prompt
 import ccr
 
 class TestChaser(unittest.TestCase):
+
+    def test_get_source_files(self):
+        with tempfile.TemporaryDirectory() as d:
+            chaser.get_source_files('aur2ccr', d)
+            self.assertTrue(os.path.isfile(os.path.join(d, 'aur2ccr', 'PKGBUILD')))
 
     def test_dependency_chain(self):
         old = chaser.recurse_depends
