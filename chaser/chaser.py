@@ -9,14 +9,20 @@ import requests
 from toposort import toposort_flatten
 import ccr
 
-from chaser import pacman, prompt
+from chaser import pacman, prompt, config
 
-def get_source_files(args, workingdir="."):
+BUILD_DIR = os.path.expanduser(config.get('BuildDir'))
+
+def get_source_files(args, workingdir=BUILD_DIR):
     """Download the source tarball and extract it"""
     try:
         pkgname = args.package
+        workingdir = "."
     except AttributeError:
         pkgname = args
+
+    if not os.path.exists(workingdir):
+        os.mkdir(workingdir)
 
     r = requests.get(ccr.getpkgurl(pkgname))
     tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
@@ -37,9 +43,9 @@ def recurse_depends(pkgname, graph=None):
 
     # Otherwise get dependencies
     graph[pkgname] = set()
-    get_source_files(pkgname, ".")
+    get_source_files(pkgname)
     output = subprocess.check_output(["pkgvars.sh",
-        "./{pkgname}/PKGBUILD".format(pkgname=pkgname)])
+        "{d}/{pkgname}/PKGBUILD".format(d=BUILD_DIR, pkgname=pkgname)])
     data = json.loads(output.decode())['variables']
     # NOTE: We don't differentiate make/depends here, this is an area for
     # improvement in the future if someone cares.
@@ -69,19 +75,25 @@ def install(args):
 
     editor = os.getenv('EDITOR')
     for package in dependency_chain(pkgname):
+        try:
+            get_source_files(package)
+        except tarfile.ReadError:
+            print("Package not found: {pkg}".format(pkg=package))
+            return 1
         # Ask to edit the PKGBUILD
         response = prompt.prompt("Edit {pkg} PKGBUILD with $EDITOR?".format(pkg=package))
         if response == prompt.YES:
-            subprocess.call([editor, "./{pkg}/PKGBUILD".format(pkg=package)])
+            subprocess.call([editor, "{d}/{pkg}/PKGBUILD".format(d=BUILD_DIR, pkg=package)])
         # Ask to edit the .install, if it exists
-        if os.path.isfile("./{pkg}/{pkg}.install".format(pkg=package)):
+        if os.path.isfile("{d}/{pkg}/{pkg}.install".format(d=BUILD_DIR, pkg=package)):
             response = prompt.prompt("Edit {pkg}.install with $EDITOR?".format(pkg=package))
             if response == prompt.YES:
-                subprocess.call([editor, "./{pkg}/{pkg}.install".format(pkg=package)])
+                subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=BUILD_DIR, pkg=package)])
         # makepkg -i
-        os.chdir(pkgname)
+        curdir = os.getcwd()
+        os.chdir(os.path.join(BUILD_DIR, pkgname))
         subprocess.call(["makepkg", "-i"])
-        os.chdir(os.pardir)
+        os.chdir(curdir)
 
 def check_updates(args):
     """Return list of (name, ver) tuples for packages with updates available"""
