@@ -83,12 +83,12 @@ def install(args):
             print("Package not found: {pkg}".format(pkg=package))
             return 1
         # Ask to edit the PKGBUILD
-        response = prompt.prompt("Edit {pkg} PKGBUILD with $EDITOR?".format(pkg=package))
+        response = prompt.prompt(_("Edit {pkg} PKGBUILD with $EDITOR?").format(pkg=package))
         if response == prompt.YES:
             subprocess.call([editor, "{d}/{pkg}/PKGBUILD".format(d=BUILD_DIR, pkg=package)])
         # Ask to edit the .install, if it exists
         if os.path.isfile("{d}/{pkg}/{pkg}.install".format(d=BUILD_DIR, pkg=package)):
-            response = prompt.prompt("Edit {pkg}.install with $EDITOR?".format(pkg=package))
+            response = prompt.prompt(_("Edit {pkg}.install with $EDITOR?").format(pkg=package))
             if response == prompt.YES:
                 subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=BUILD_DIR, pkg=package)])
         # makepkg -i
@@ -121,8 +121,8 @@ def list_updates(args):
 def update(args):
     """Install updates"""
     updates = check_updates()
-    print("Updates: {pkgs}".format(pkgs='  '.join([ '-'.join(p) for p in updates ])))
-    response = prompt.prompt("Continue with installation?")
+    print(_("Updates: {pkgs}").format(pkgs='  '.join([ '-'.join(p) for p in updates ])))
+    response = prompt.prompt(_("Continue with installation?"))
     if response == prompt.YES:
         for name, ver in updates:
             install(name)
@@ -153,12 +153,12 @@ def info(args):
         print("Package not found")
         return 1
 
-    print("Name           : {name}".format(name=results.Name))
-    print("Version        : {ver}".format(ver=results.Version))
-    print("URL            : {url}".format(url=results.URL))
-    print("Licenses       : {license}".format(license=results.License))
-    print("Category       : {cat}".format(cat=results.Category))
-    print("Votes          : {votes}".format(votes=results.NumVotes))
-    print("Maintainer     : {name}".format(name=results.Maintainer))
-    print("OutOfDate      : {val}".format(val=True if results.OutOfDate == '1' else False))
-    print("Description    : {desc}".format(desc=results.Description))
+    print(_("Name           : {name}").format(name=results.Name))
+    print(_("Version        : {ver}").format(ver=results.Version))
+    print(_("URL            : {url}").format(url=results.URL))
+    print(_("Licenses       : {license}").format(license=results.License))
+    print(_("Category       : {cat}").format(cat=results.Category))
+    print(_("Votes          : {votes}").format(votes=results.NumVotes))
+    print(_("Maintainer     : {name}").format(name=results.Maintainer))
+    print(_("OutOfDate      : {val}").format(val=True if results.OutOfDate == '1' else False))
+    print(_("Description    : {desc}").format(desc=results.Description))

@@ -1,5 +1,5 @@
-YES = "y"
-NO = "n"
+YES = _("y")
+NO = _("n")
 
 def user_input(message):
     """Substitutable input prompt"""
