@@ -5,6 +5,7 @@ import json
 import re
 import os
 
+from pkg_resources import parse_version
 import requests
 from toposort import toposort_flatten
 import ccr
@@ -106,10 +107,7 @@ def check_updates(args):
         except ccr.ccr.PackageNotFound:
             continue
         newver = data.get('Version', '0-0')
-        pkgver, pkgrel = newver.split('-')
-        if pkgver > curver.split('-')[0]:
-            updates.append((pkgname, newver))
-        elif pkgver == curver.split('-')[0] and pkgrel > curver.split('-')[1]:
+        if parse_version(newver) > parse_version(curver):
             updates.append((pkgname, newver))
 
     return updates
