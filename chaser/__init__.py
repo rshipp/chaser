@@ -26,6 +26,10 @@ def main():
     parser_s.add_argument('query')
     parser_s.set_defaults(func=chaser.search)
 
+    parser_n = subparsers.add_parser('info')
+    parser_n.add_argument('package')
+    parser_n.set_defaults(func=chaser.info)
+
     args = parser.parse_args()
     try:
         args.func(args)

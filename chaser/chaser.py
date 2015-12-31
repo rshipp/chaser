@@ -124,7 +124,30 @@ def search(args):
         query = args
 
     results = ccr.search(query)
-    results.sort(key=lambda x: x['Name'])
+    results.sort(key=lambda x: x.Name)
     for pkg in results:
         print("ccr/{name} {ver}".format(name=pkg.Name, ver=pkg.Version))
         print("    {desc}".format(desc=pkg.Description))
+
+def info(args):
+    """Print package info"""
+    try:
+        package = args.package
+    except AttributeError:
+        package = args
+
+    try:
+        results = ccr.info(package)
+    except ccr.ccr.PackageNotFound:
+        print("Package not found")
+        return 1
+
+    print("Name           : {name}".format(name=results.Name))
+    print("Version        : {ver}".format(ver=results.Version))
+    print("URL            : {url}".format(url=results.URL))
+    print("Licenses       : {license}".format(license=results.License))
+    print("Category       : {cat}".format(cat=results.Category))
+    print("Votes          : {votes}".format(votes=results.NumVotes))
+    print("Maintainer     : {name}".format(name=results.Maintainer))
+    print("OutOfDate      : {val}".format(val=True if results.OutOfDate == '1' else False))
+    print("Description    : {desc}".format(desc=results.Description))
