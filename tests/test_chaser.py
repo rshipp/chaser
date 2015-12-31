@@ -13,6 +13,39 @@ class TestChaser(unittest.TestCase):
             chaser.get_source_files('aur2ccr', d)
             self.assertTrue(os.path.isfile(os.path.join(d, 'aur2ccr', 'PKGBUILD')))
 
+    def test_recurse_depends(self):
+        old = (chaser.BUILD_DIR, pacman.is_installed)
+        with tempfile.TemporaryDirectory() as d:
+            chaser.BUILD_DIR = d
+            pacman.is_installed = lambda x: False
+            expected = {
+                'abs': set(['bash', 'rsync']),
+                'aur2ccr': set([
+                    'abs',
+                    'bash',
+                    'ccr',
+                    'curl',
+                    'gawk',
+                    'jshon',
+                    'pacman',
+                    'python2',
+                    'sed'
+                ]),
+                'bash': set(),
+                'ccr': set(),
+                'curl': set(),
+                'gawk': set(),
+                'jshon': set(),
+                'pacman': set(),
+                'python2': set(),
+                'rsync': set(),
+                'sed': set()
+            }
+            self.assertEquals(expected, chaser.recurse_depends('aur2ccr'))
+            pacman.is_installed = lambda x: True
+            self.assertEquals({'aur2ccr': set()}, chaser.recurse_depends('aur2ccr'))
+        chaser.BUILD_DIR, pacman.is_installed = old
+
     def test_dependency_chain(self):
         old = chaser.recurse_depends
         graph = {

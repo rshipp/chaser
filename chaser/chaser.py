@@ -14,13 +14,14 @@ from chaser import pacman, prompt, config
 
 BUILD_DIR = os.path.expanduser(config.get('BuildDir'))
 
-def get_source_files(args, workingdir=BUILD_DIR):
-    """Download the source tarball and extract it"""
+def get_source_files(args, workingdir=None):
+    """Download the source tarball and extract it, workingdir defaults to BUILD_DIR"""
     try:
         pkgname = args.package
         workingdir = "."
     except AttributeError:
         pkgname = args
+        workingdir = workingdir or BUILD_DIR
 
     if not os.path.exists(workingdir):
         os.mkdir(workingdir)
