@@ -26,7 +26,7 @@ def get_source_files(args, workingdir=None):
     if not os.path.exists(workingdir):
         os.mkdir(workingdir)
 
-    r = requests.get(ccr.getpkgurl(pkgname))
+    r = requests.get(ccr.pkg_url(pkgname))
     tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
     tar.extractall(workingdir)
 
@@ -105,7 +105,7 @@ def check_updates(args):
         pkgname, curver = pkg
         try:
             data = ccr.info(pkgname)
-        except ccr.ccr.PackageNotFound:
+        except ccr.PackageNotFound:
             continue
         newver = data.get('Version', '0-0')
         if parse_version(newver) > parse_version(curver):
@@ -149,7 +149,7 @@ def info(args):
 
     try:
         results = ccr.info(package)
-    except ccr.ccr.PackageNotFound:
+    except ccr.PackageNotFound:
         print("Package not found")
         return 1
 
