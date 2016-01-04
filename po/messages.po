@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chaser 0.6\n"
 "Report-Msgid-Bugs-To: chakra@rshipp.com\n"
-"POT-Creation-Date: 2015-12-31 20:12+0100\n"
+"POT-Creation-Date: 2016-01-04 11:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,66 +18,75 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: chaser/chaser.py:85
+#, python-brace-format
+msgid "Targets: {packages}"
+msgstr ""
+
 #: chaser/chaser.py:86
+msgid "Proceed with installation?"
+msgstr ""
+
+#: chaser/chaser.py:96
 #, python-brace-format
 msgid "Edit {pkg} PKGBUILD with $EDITOR?"
 msgstr ""
 
-#: chaser/chaser.py:91
+#: chaser/chaser.py:101
 #, python-brace-format
 msgid "Edit {pkg}.install with $EDITOR?"
 msgstr ""
 
-#: chaser/chaser.py:124
+#: chaser/chaser.py:134
 #, python-brace-format
 msgid "Updates: {pkgs}"
 msgstr ""
 
-#: chaser/chaser.py:125
+#: chaser/chaser.py:135
 msgid "Continue with installation?"
 msgstr ""
 
-#: chaser/chaser.py:156
+#: chaser/chaser.py:166
 #, python-brace-format
 msgid "Name           : {name}"
 msgstr ""
 
-#: chaser/chaser.py:157
+#: chaser/chaser.py:167
 #, python-brace-format
 msgid "Version        : {ver}"
 msgstr ""
 
-#: chaser/chaser.py:158
+#: chaser/chaser.py:168
 #, python-brace-format
 msgid "URL            : {url}"
 msgstr ""
 
-#: chaser/chaser.py:159
+#: chaser/chaser.py:169
 #, python-brace-format
 msgid "Licenses       : {license}"
 msgstr ""
 
-#: chaser/chaser.py:160
+#: chaser/chaser.py:170
 #, python-brace-format
 msgid "Category       : {cat}"
 msgstr ""
 
-#: chaser/chaser.py:161
+#: chaser/chaser.py:171
 #, python-brace-format
 msgid "Votes          : {votes}"
 msgstr ""
 
-#: chaser/chaser.py:162
+#: chaser/chaser.py:172
 #, python-brace-format
 msgid "Maintainer     : {name}"
 msgstr ""
 
-#: chaser/chaser.py:163
+#: chaser/chaser.py:173
 #, python-brace-format
 msgid "OutOfDate      : {val}"
 msgstr ""
 
-#: chaser/chaser.py:164
+#: chaser/chaser.py:174
 #, python-brace-format
 msgid "Description    : {desc}"
 msgstr ""

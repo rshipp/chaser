@@ -27,6 +27,7 @@ def get_source_files(args, workingdir=None):
         os.mkdir(workingdir)
 
     r = requests.get(ccr.pkg_url(pkgname))
+    r.raise_for_status()
     tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
     tar.extractall(workingdir)
 
@@ -45,7 +46,11 @@ def recurse_depends(pkgname, graph=None):
 
     # Otherwise get dependencies
     graph[pkgname] = set()
-    get_source_files(pkgname)
+    try:
+        get_source_files(pkgname)
+    except requests.exceptions.HTTPError:
+        # Package not found, or other error
+        return graph
     output = subprocess.check_output(["pkgvars.sh",
         "{d}/{pkgname}/PKGBUILD".format(d=BUILD_DIR, pkgname=pkgname)])
     data = json.loads(output.decode())['variables']
@@ -76,10 +81,15 @@ def install(args):
         pkgname = args
 
     editor = os.getenv('EDITOR')
-    for package in dependency_chain(pkgname):
+    packages = dependency_chain(pkgname)
+    print(_("Targets: {packages}").format(packages=' '.join(packages)))
+    response = prompt.prompt(_("Proceed with installation?"))
+    if response == prompt.NO:
+        return 0
+    for package in packages:
         try:
             get_source_files(package)
-        except tarfile.ReadError:
+        except (requests.exceptions.HTTPError, tarfile.ReadError):
             print("Package not found: {pkg}".format(pkg=package))
             return 1
         # Ask to edit the PKGBUILD
