@@ -111,7 +111,7 @@ def install(args):
         subprocess.call(["makepkg", "-i"])
         os.chdir(curdir)
 
-def check_updates(args):
+def check_updates(args=None):
     """Return list of (name, ver) tuples for packages with updates available"""
     installed = pacman.list_unofficial()
     updates = []
@@ -127,7 +127,7 @@ def check_updates(args):
 
     return updates
 
-def list_updates(args):
+def list_updates(args=None):
     """List currently installed unofficial packages in `name ver` format"""
     for name, ver in check_updates():
         print(name, ver)
