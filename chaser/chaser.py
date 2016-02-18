@@ -10,15 +10,15 @@ import requests
 from toposort import toposort_flatten
 import ccr
 
-from chaser import pacman, prompt, config
+from chaser import pacman, prompt
 
-BUILD_DIR = os.path.expanduser(config.get('BuildDir'))
+BUILD_DIR = "/tmp/chaser"
 
 def get_source_files(args, workingdir=None):
     """Download the source tarball and extract it, workingdir defaults to BUILD_DIR"""
     try:
         pkgname = args.package
-        workingdir = "."
+        workingdir = args.build_dir or BUILD_DIR
     except AttributeError:
         pkgname = args
         workingdir = workingdir or BUILD_DIR
@@ -31,7 +31,7 @@ def get_source_files(args, workingdir=None):
     tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
     tar.extractall(workingdir)
 
-def recurse_depends(pkgname, graph=None):
+def recurse_depends(pkgname, workingdir=None, graph=None):
     """Build a dependency graph"""
     if graph is None:
         graph = {}
@@ -47,12 +47,12 @@ def recurse_depends(pkgname, graph=None):
     # Otherwise get dependencies
     graph[pkgname] = set()
     try:
-        get_source_files(pkgname)
+        get_source_files(pkgname, workingdir)
     except requests.exceptions.HTTPError:
         # Package not found, or other error
         return graph
     output = subprocess.check_output(["pkgvars.sh",
-        "{d}/{pkgname}/PKGBUILD".format(d=BUILD_DIR, pkgname=pkgname)])
+        "{d}/{pkgname}/PKGBUILD".format(d=workingdir, pkgname=pkgname)])
     data = json.loads(output.decode())['variables']
     # NOTE: We don't differentiate make/depends here, this is an area for
     # improvement in the future if someone cares.
@@ -64,43 +64,45 @@ def recurse_depends(pkgname, graph=None):
             graph[pkgname].add(depname)
 
     for dep in graph[pkgname]:
-        recurse_depends(dep, graph)
+        recurse_depends(dep, workingdir, graph)
 
     return graph
 
-def dependency_chain(pkgname):
+def dependency_chain(pkgname, workingdir=None):
     """Return an ordered list of dependencies for a package"""
-    depends = recurse_depends(pkgname)
+    depends = recurse_depends(pkgname, workingdir)
     return toposort_flatten(depends)
 
 def install(args):
     """Install a given package"""
     try:
         pkgname = args.package
+        workingdir = args.build_dir or BUILD_DIR
     except AttributeError:
         pkgname = args
+        workingdir = BUILD_DIR
 
     editor = os.getenv('EDITOR')
-    packages = dependency_chain(pkgname)
+    packages = dependency_chain(pkgname, workingdir)
     print(_("Targets: {packages}").format(packages=' '.join(packages)))
     response = prompt.prompt(_("Proceed with installation?"))
     if response == prompt.NO:
         return 0
     for package in packages:
         try:
-            get_source_files(package)
+            get_source_files(package, workingdir)
         except (requests.exceptions.HTTPError, tarfile.ReadError):
             print("Package not found: {pkg}".format(pkg=package))
             return 1
         # Ask to edit the PKGBUILD
         response = prompt.prompt(_("Edit {pkg} PKGBUILD with $EDITOR?").format(pkg=package))
         if response == prompt.YES:
-            subprocess.call([editor, "{d}/{pkg}/PKGBUILD".format(d=BUILD_DIR, pkg=package)])
+            subprocess.call([editor, "{d}/{pkg}/PKGBUILD".format(d=workingdir, pkg=package)])
         # Ask to edit the .install, if it exists
-        if os.path.isfile("{d}/{pkg}/{pkg}.install".format(d=BUILD_DIR, pkg=package)):
+        if os.path.isfile("{d}/{pkg}/{pkg}.install".format(d=workingdir, pkg=package)):
             response = prompt.prompt(_("Edit {pkg}.install with $EDITOR?").format(pkg=package))
             if response == prompt.YES:
-                subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=BUILD_DIR, pkg=package)])
+                subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=workingdir, pkg=package)])
         # makepkg -i
         curdir = os.getcwd()
         os.chdir(os.path.join(BUILD_DIR, pkgname))

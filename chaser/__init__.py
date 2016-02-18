@@ -16,14 +16,18 @@ def main():
     )
     subparsers = parser.add_subparsers()
 
-    parser.add_argument('-v', '--version', 
+    parser.add_argument('-v', '--version',
             help=_("show version information and exit"),
             action='version', version='Chaser {v}'.format(v=__version__)
     )
 
+    parser.add_argument('-b', '--build-dir', metavar='BUILD_DIR',
+            help=_("build packages in BUILD_DIR. default = ") + chaser.BUILD_DIR,
+    )
+
     parser_g = subparsers.add_parser('get', help=_("download source files here"))
     parser_g.add_argument('package')
-    parser_g.set_defaults(func=chaser.get_source_files)
+    parser_g.set_defaults(func=chaser.get_source_files, build_dir='.')
 
     parser_i = subparsers.add_parser('install', help=_("install a package from the CCR"))
     parser_i.add_argument('package')

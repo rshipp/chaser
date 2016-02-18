@@ -55,15 +55,15 @@ class TestChaser(unittest.TestCase):
             'c': set(),
             'd': set(['a', 'b']),
         }
-        chaser.recurse_depends = lambda x: graph
+        chaser.recurse_depends = lambda x, y: graph
         self.assertEquals(['c', 'b', 'a', 'd'], chaser.dependency_chain('d'))
         chaser.recurse_depends = old
 
     def test_smoke_install(self):
         old = (chaser.dependency_chain, chaser.get_source_files,
                 prompt.prompt, subprocess.call, os.chdir, os.path.isfile)
-        chaser.dependency_chain = lambda x: [x]
-        chaser.get_source_files = lambda x: None
+        chaser.dependency_chain = lambda x, y: [x]
+        chaser.get_source_files = lambda x, y: None
         prompt.prompt = lambda x: prompt.YES
         subprocess.call = lambda x: None
         os.chdir = lambda x: None
