@@ -33,6 +33,8 @@ def get_source_files(args, workingdir=None):
 
 def recurse_depends(pkgname, workingdir=None, graph=None):
     """Build a dependency graph"""
+    if workingdir is None:
+        workingdir = BUILD_DIR
     if graph is None:
         graph = {}
 
@@ -105,7 +107,7 @@ def install(args):
                 subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=workingdir, pkg=package)])
         # makepkg -i
         curdir = os.getcwd()
-        os.chdir(os.path.join(BUILD_DIR, pkgname))
+        os.chdir(os.path.join(workingdir, package))
         subprocess.call(["makepkg", "-i"])
         os.chdir(curdir)
 
