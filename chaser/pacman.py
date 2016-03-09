@@ -17,3 +17,6 @@ def exists(pkgname):
 def list_unofficial():
     return [ l.split() for l in subprocess.check_output(['pacman',
         '-Qm']).decode().strip().split('\n') ]
+
+def search(query):
+    return subprocess.check_output(['pacman', '-Ss', '--', query]).decode().strip().split('\n')

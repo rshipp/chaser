@@ -148,6 +148,11 @@ def search(args):
     except AttributeError:
         query = args
 
+    repo_results = pacman.search(query)
+    if repo_results:
+        for line in repo_results:
+            print(line)
+
     results = ccr.search(query)
     if results == "No results found":
         return
