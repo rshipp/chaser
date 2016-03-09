@@ -149,6 +149,9 @@ def search(args):
         query = args
 
     results = ccr.search(query)
+    if results == "No results found":
+        return
+
     results.sort(key=lambda x: x.Name)
     for pkg in results:
         print("ccr/{name} {ver}".format(name=pkg.Name, ver=pkg.Version))
