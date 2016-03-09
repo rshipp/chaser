@@ -84,7 +84,7 @@ def install(args):
         pkgname = args
         workingdir = BUILD_DIR
 
-    editor = os.getenv('EDITOR')
+    editor = os.getenv('EDITOR') or 'vim'
     packages = dependency_chain(pkgname, workingdir)
     print(_("Targets: {packages}").format(packages=' '.join(packages)))
     response = prompt.prompt(_("Proceed with installation?"))
