@@ -19,4 +19,7 @@ def list_unofficial():
         '-Qm']).decode().strip().split('\n') ]
 
 def search(query):
-    return subprocess.check_output(['pacman', '-Ss', '--', query]).decode().strip().split('\n')
+    try:
+        return subprocess.check_output(['pacman', '-Ss', '--', query]).decode().strip().split('\n')
+    except subprocess.CalledProcessError:
+        return ''
