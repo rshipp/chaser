@@ -62,7 +62,7 @@ def recurse_depends(pkgname, workingdir=None, graph=None):
     # Only depends that are not already installed
     for dep in depends:
         depname = re.split('[>=<]', dep)[0]
-        if not pacman.is_installed(depname):
+        if not pacman.exists(depname):
             graph[pkgname].add(depname)
 
     for dep in graph[pkgname]:
@@ -105,10 +105,10 @@ def install(args):
             response = prompt.prompt(_("Edit {pkg}.install with $EDITOR?").format(pkg=package))
             if response == prompt.YES:
                 subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=workingdir, pkg=package)])
-        # makepkg -i
+        # makepkg
         curdir = os.getcwd()
         os.chdir(os.path.join(workingdir, package))
-        subprocess.call(["makepkg", "-i"])
+        subprocess.call(["makepkg", "-si"])
         os.chdir(curdir)
 
 def check_updates(args=None):
