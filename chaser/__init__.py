@@ -49,6 +49,6 @@ def main():
 
     args = parser.parse_args()
     try:
-        args.func(args)
+        return args.func(args)
     except AttributeError:
-        parser.print_usage()
+        return parser.print_usage()
