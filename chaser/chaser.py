@@ -100,7 +100,7 @@ def install(args):
         try:
             get_source_files(package, workingdir)
         except (requests.exceptions.HTTPError, tarfile.ReadError):
-            print("Package not found: {pkg}".format(pkg=package))
+            print(_("Package not found: {pkg}").format(pkg=package))
             return 1
         # Ask to edit the PKGBUILD
         response = prompt.prompt(_("Edit {pkg} PKGBUILD with $EDITOR?").format(pkg=package))
