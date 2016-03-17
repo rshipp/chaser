@@ -92,6 +92,8 @@ def install(args):
         print(_("Package not found: {pkg}").format(pkg=pkgname))
         return 1
 
+    packages = dependency_chain(pkgname, workingdir)
+
     print(_("Targets: {packages}").format(packages=' '.join(packages)))
     response = prompt.prompt(_("Proceed with installation?"))
     if response == prompt.NO:
