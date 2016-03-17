@@ -85,7 +85,13 @@ def install(args):
         workingdir = BUILD_DIR
 
     editor = os.getenv('EDITOR') or 'vim'
-    packages = dependency_chain(pkgname, workingdir)
+    try:
+        # Make sure the package exists
+        ccr.info(pkgname)
+    except ccr.PackageNotFound:
+        print(_("Package not found: {pkg}").format(pkg=pkgname))
+        return 1
+
     print(_("Targets: {packages}").format(packages=' '.join(packages)))
     response = prompt.prompt(_("Proceed with installation?"))
     if response == prompt.NO:
