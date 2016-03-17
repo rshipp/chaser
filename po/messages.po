@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Chaser 0.6\n"
+"Project-Id-Version: Chaser 0.8.5\n"
 "Report-Msgid-Bugs-To: chakra@rshipp.com\n"
-"POT-Creation-Date: 2016-01-04 11:09+0100\n"
+"POT-Creation-Date: 2016-03-17 13:23-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,75 +18,80 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: chaser/chaser.py:85
+#: chaser/chaser.py:92 chaser/chaser.py:103
+#, python-brace-format
+msgid "Package not found: {pkg}"
+msgstr ""
+
+#: chaser/chaser.py:95
 #, python-brace-format
 msgid "Targets: {packages}"
 msgstr ""
 
-#: chaser/chaser.py:86
+#: chaser/chaser.py:96
 msgid "Proceed with installation?"
 msgstr ""
 
-#: chaser/chaser.py:96
+#: chaser/chaser.py:106
 #, python-brace-format
 msgid "Edit {pkg} PKGBUILD with $EDITOR?"
 msgstr ""
 
-#: chaser/chaser.py:101
+#: chaser/chaser.py:111
 #, python-brace-format
 msgid "Edit {pkg}.install with $EDITOR?"
 msgstr ""
 
-#: chaser/chaser.py:134
+#: chaser/chaser.py:144
 #, python-brace-format
 msgid "Updates: {pkgs}"
 msgstr ""
 
-#: chaser/chaser.py:135
+#: chaser/chaser.py:145
 msgid "Continue with installation?"
 msgstr ""
 
-#: chaser/chaser.py:166
+#: chaser/chaser.py:184
 #, python-brace-format
 msgid "Name           : {name}"
 msgstr ""
 
-#: chaser/chaser.py:167
+#: chaser/chaser.py:185
 #, python-brace-format
 msgid "Version        : {ver}"
 msgstr ""
 
-#: chaser/chaser.py:168
+#: chaser/chaser.py:186
 #, python-brace-format
 msgid "URL            : {url}"
 msgstr ""
 
-#: chaser/chaser.py:169
+#: chaser/chaser.py:187
 #, python-brace-format
 msgid "Licenses       : {license}"
 msgstr ""
 
-#: chaser/chaser.py:170
+#: chaser/chaser.py:188
 #, python-brace-format
 msgid "Category       : {cat}"
 msgstr ""
 
-#: chaser/chaser.py:171
+#: chaser/chaser.py:189
 #, python-brace-format
 msgid "Votes          : {votes}"
 msgstr ""
 
-#: chaser/chaser.py:172
+#: chaser/chaser.py:190
 #, python-brace-format
 msgid "Maintainer     : {name}"
 msgstr ""
 
-#: chaser/chaser.py:173
+#: chaser/chaser.py:191
 #, python-brace-format
 msgid "OutOfDate      : {val}"
 msgstr ""
 
-#: chaser/chaser.py:174
+#: chaser/chaser.py:192
 #, python-brace-format
 msgid "Description    : {desc}"
 msgstr ""
@@ -99,27 +104,31 @@ msgstr ""
 msgid "show version information and exit"
 msgstr ""
 
-#: chaser/__init__.py:24
-msgid "download source files here"
+#: chaser/__init__.py:25
+msgid "build packages in BUILD_DIR. default = "
 msgstr ""
 
 #: chaser/__init__.py:28
-msgid "install a package from the CCR"
+msgid "download source files here"
 msgstr ""
 
 #: chaser/__init__.py:32
+msgid "install a package from the CCR"
+msgstr ""
+
+#: chaser/__init__.py:36
 msgid "list available updates"
 msgstr ""
 
-#: chaser/__init__.py:35
+#: chaser/__init__.py:39
 msgid "search for and install updates for CCR packages"
 msgstr ""
 
-#: chaser/__init__.py:38
+#: chaser/__init__.py:42
 msgid "search CCR packages"
 msgstr ""
 
-#: chaser/__init__.py:42
+#: chaser/__init__.py:46
 msgid "display package information"
 msgstr ""
 
