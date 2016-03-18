@@ -62,7 +62,7 @@ def recurse_depends(pkgname, workingdir=None, graph=None):
     # Only depends that are not already installed
     for dep in depends:
         depname = re.split('[>=<]', dep)[0]
-        if not pacman.exists(depname):
+        if not pacman.exists(depname) and not pacman.is_installed(depname):
             graph[pkgname].add(depname)
 
     for dep in graph[pkgname]:
