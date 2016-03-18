@@ -26,7 +26,7 @@
 
 	before=$(env -0|base64)
 	set -a
-	source ${1:-PKGBUILD}
+	source ${1:-PKGBUILD} >/dev/null 2>/dev/null
 	set +a
 
 	IFS=$'\n'
