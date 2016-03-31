@@ -26,11 +26,11 @@ def main():
     )
 
     parser_g = subparsers.add_parser('get', help=_("download source files here"))
-    parser_g.add_argument('package')
+    parser_g.add_argument('package', nargs='+')
     parser_g.set_defaults(func=chaser.get_source_files, build_dir='.')
 
     parser_i = subparsers.add_parser('install', help=_("install a package from the CCR"))
-    parser_i.add_argument('package')
+    parser_i.add_argument('package', nargs='+')
     parser_i.set_defaults(func=chaser.install)
 
     parser_l = subparsers.add_parser('listupdates', help=_("list available updates"))

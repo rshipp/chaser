@@ -19,19 +19,20 @@ BUILD_DIR = "/tmp/chaser"
 def get_source_files(args, workingdir=None):
     """Download the source tarball and extract it, workingdir defaults to BUILD_DIR"""
     try:
-        pkgname = args.package
+        pkgnames = args.package
         workingdir = args.build_dir or BUILD_DIR
     except AttributeError:
-        pkgname = args
+        pkgnames = args
         workingdir = workingdir or BUILD_DIR
 
     if not os.path.exists(workingdir):
         os.mkdir(workingdir)
 
-    r = requests.get(ccr.pkg_url(pkgname))
-    r.raise_for_status()
-    tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
-    tar.extractall(workingdir)
+    for pkgname in pkgnames:
+        r = requests.get(ccr.pkg_url(pkgname))
+        r.raise_for_status()
+        tar = tarfile.open(mode='r', fileobj=io.BytesIO(r.content))
+        tar.extractall(workingdir)
 
 def recurse_depends(pkgname, workingdir=None, graph=None):
     """Build a dependency graph"""
@@ -51,7 +52,7 @@ def recurse_depends(pkgname, workingdir=None, graph=None):
     # Otherwise get dependencies
     graph[pkgname] = set()
     try:
-        get_source_files(pkgname, workingdir)
+        get_source_files([pkgname], workingdir)
     except requests.exceptions.HTTPError:
         # Package not found, or other error
         return graph
@@ -88,23 +89,25 @@ def print_targets(packages):
 def install(args):
     """Install a given package"""
     try:
-        pkgname = args.package
+        pkgnames = args.package
         workingdir = args.build_dir or BUILD_DIR
     except AttributeError:
-        pkgname = args
+        pkgnames = args
         workingdir = BUILD_DIR
 
     print(_("resolving dependencies..."))
 
     editor = os.getenv('EDITOR') or 'vim'
-    try:
-        # Make sure the package exists
-        ccr.info(pkgname)
-    except ccr.PackageNotFound:
-        print(_("Package not found: {pkg}").format(pkg=pkgname))
-        return 1
+    packages = []
+    for pkgname in pkgnames:
+        try:
+            # Make sure the package exists
+            ccr.info(pkgname)
+        except ccr.PackageNotFound:
+            print(_("Package not found: {pkg}").format(pkg=pkgname))
+            return 1
 
-    packages = dependency_chain(pkgname, workingdir)
+        packages += dependency_chain(pkgname, workingdir)
 
     print_targets(packages)
     response = prompt.prompt(_("Proceed with installation?"), major=True)
@@ -112,7 +115,7 @@ def install(args):
         return 0
     for package in packages:
         try:
-            get_source_files(package, workingdir)
+            get_source_files([package], workingdir)
         except (requests.exceptions.HTTPError, tarfile.ReadError):
             print(_("Package not found: {pkg}").format(pkg=package))
             return 1
