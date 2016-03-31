@@ -10,7 +10,7 @@ class TestChaser(unittest.TestCase):
 
     def test_get_source_files(self):
         with tempfile.TemporaryDirectory() as d:
-            chaser.get_source_files('aur2ccr', d)
+            chaser.get_source_files(['aur2ccr'], d)
             self.assertTrue(os.path.isfile(os.path.join(d, 'aur2ccr', 'PKGBUILD')))
 
     """
