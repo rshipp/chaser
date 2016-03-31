@@ -52,3 +52,5 @@ def main():
         return args.func(args)
     except AttributeError:
         return parser.print_usage()
+    except KeyboardInterrupt:
+        return 1
