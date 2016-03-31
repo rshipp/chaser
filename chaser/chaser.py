@@ -135,15 +135,17 @@ def check_updates(args=None):
     """Return list of (name, ver) tuples for packages with updates available"""
     installed = pacman.list_unofficial()
     updates = []
-    for pkg in installed:
-        pkgname, curver = pkg
-        try:
-            data = ccr.info(pkgname)
-        except ccr.PackageNotFound:
-            continue
-        newver = data.get('Version', '0-0')
-        if parse_version(newver) > parse_version(curver):
-            updates.append((pkgname, newver))
+    with progressbar.ProgressBar(max_value=len(installed)) as bar:
+        for i, pkg in enumerate(installed):
+            pkgname, curver = pkg
+            try:
+                data = ccr.info(pkgname)
+            except ccr.PackageNotFound:
+                continue
+            newver = data.get('Version', '0-0')
+            if parse_version(newver) > parse_version(curver):
+                updates.append((pkgname, newver))
+            bar.update(i)
 
     return updates
 
