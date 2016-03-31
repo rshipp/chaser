@@ -2,3 +2,5 @@ setuptools
 requests==2.9.1
 toposort==1.4
 git+https://github.com/ccr-tools/python-ccr.git
+termcolor==1.1.0
+progressbar2==3.6.2

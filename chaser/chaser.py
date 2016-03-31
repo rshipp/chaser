@@ -5,6 +5,8 @@ import json
 import re
 import os
 
+import termcolor
+import progressbar
 from pkg_resources import parse_version
 import requests
 from toposort import toposort_flatten
@@ -75,6 +77,14 @@ def dependency_chain(pkgname, workingdir=None):
     depends = recurse_depends(pkgname, workingdir)
     return toposort_flatten(depends)
 
+def print_targets(packages):
+    """Formatted print"""
+    print()
+    print(termcolor.colored(_("Targets"), attrs=['bold']) + \
+          termcolor.colored(" ({num}) ".format(num=len(packages)), attrs=['bold']) + \
+          "{packages}".format(num=len(packages), packages='  '.join(['-'.join(p) for p in packages if type(p) == tuple] or packages)))
+    print()
+
 def install(args):
     """Install a given package"""
     try:
@@ -83,6 +93,8 @@ def install(args):
     except AttributeError:
         pkgname = args
         workingdir = BUILD_DIR
+
+    print(_("resolving dependencies..."))
 
     editor = os.getenv('EDITOR') or 'vim'
     try:
@@ -94,8 +106,8 @@ def install(args):
 
     packages = dependency_chain(pkgname, workingdir)
 
-    print(_("Targets: {packages}").format(packages=' '.join(packages)))
-    response = prompt.prompt(_("Proceed with installation?"))
+    print_targets(packages)
+    response = prompt.prompt(_("Proceed with installation?"), major=True)
     if response == prompt.NO:
         return 0
     for package in packages:
@@ -105,12 +117,12 @@ def install(args):
             print(_("Package not found: {pkg}").format(pkg=package))
             return 1
         # Ask to edit the PKGBUILD
-        response = prompt.prompt(_("Edit {pkg} PKGBUILD with $EDITOR?").format(pkg=package))
+        response = prompt.prompt(_("Edit {pkg} PKGBUILD with $EDITOR?").format(pkg=package), color='yellow')
         if response == prompt.YES:
             subprocess.call([editor, "{d}/{pkg}/PKGBUILD".format(d=workingdir, pkg=package)])
         # Ask to edit the .install, if it exists
         if os.path.isfile("{d}/{pkg}/{pkg}.install".format(d=workingdir, pkg=package)):
-            response = prompt.prompt(_("Edit {pkg}.install with $EDITOR?").format(pkg=package))
+            response = prompt.prompt(_("Edit {pkg}.install with $EDITOR?").format(pkg=package), color='yellow')
             if response == prompt.YES:
                 subprocess.call([editor, "{d}/{pkg}/{pkg}.install".format(d=workingdir, pkg=package)])
         # makepkg
@@ -142,9 +154,11 @@ def list_updates(args=None):
 
 def update(args):
     """Install updates"""
+    print(termcolor.colored(":: ", 'blue', attrs=['bold']) + \
+          termcolor.colored(_("Checking for updates..."), attrs=['bold']))
     updates = check_updates()
-    print(_("Updates: {pkgs}").format(pkgs='  '.join([ '-'.join(p) for p in updates ])))
-    response = prompt.prompt(_("Continue with installation?"))
+    print_targets(updates)
+    response = prompt.prompt(_("Continue with installation?"), major=True)
     if response == prompt.YES:
         for name, ver in updates:
             install(name)
@@ -167,7 +181,10 @@ def search(args):
 
     results.sort(key=lambda x: x.Name)
     for pkg in results:
-        print("ccr/{name} {ver}".format(name=pkg.Name, ver=pkg.Version))
+        print(''.join([
+            termcolor.colored("ccr/", color='magenta', attrs=['bold']),
+            termcolor.colored(pkg.Name, attrs=['bold']), ' ',
+            termcolor.colored(pkg.Version, color='green', attrs=['bold'])]))
         print("    {desc}".format(desc=pkg.Description))
 
 def info(args):
@@ -183,12 +200,14 @@ def info(args):
         print("Package not found")
         return 1
 
-    print(_("Name           : {name}").format(name=results.Name))
-    print(_("Version        : {ver}").format(ver=results.Version))
-    print(_("URL            : {url}").format(url=results.URL))
-    print(_("Licenses       : {license}").format(license=results.License))
-    print(_("Category       : {cat}").format(cat=results.Category))
-    print(_("Votes          : {votes}").format(votes=results.NumVotes))
-    print(_("Maintainer     : {name}").format(name=results.Maintainer))
-    print(_("OutOfDate      : {val}").format(val=True if results.OutOfDate == '1' else False))
-    print(_("Description    : {desc}").format(desc=results.Description))
+    print(''.join([
+        termcolor.colored(_("Name           : "), attrs=['bold']), results.Name, '\n',
+        termcolor.colored(_("Version        : "), attrs=['bold']), results.Version, '\n',
+        termcolor.colored(_("URL            : "), attrs=['bold']), results.URL, '\n',
+        termcolor.colored(_("Licenses       : "), attrs=['bold']), results.License, '\n',
+        termcolor.colored(_("Category       : "), attrs=['bold']), results.Category, '\n',
+        termcolor.colored(_("Votes          : "), attrs=['bold']), str(results.NumVotes), '\n',
+        termcolor.colored(_("Maintainer     : "), attrs=['bold']), results.Maintainer, '\n',
+        termcolor.colored(_("OutOfDate      : "), attrs=['bold']), "{val}".format(val=True if results.OutOfDate == '1' else False), '\n',
+        termcolor.colored(_("Description    : "), attrs=['bold']), results.Description,
+    ]))

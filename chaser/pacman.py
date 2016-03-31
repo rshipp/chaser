@@ -20,6 +20,6 @@ def list_unofficial():
 
 def search(query):
     try:
-        return subprocess.check_output(['pacman', '-Ss', '--', query]).decode().strip().split('\n')
+        return subprocess.check_output(['pacman', '-Ss', '--color=always', '--', query]).decode().strip().split('\n')
     except subprocess.CalledProcessError:
         return ''
