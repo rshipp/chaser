@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Chaser 0.8.5\n"
+"Project-Id-Version: Chaser 0.9\n"
 "Report-Msgid-Bugs-To: chakra@rshipp.com\n"
-"POT-Creation-Date: 2016-03-17 13:23-0600\n"
+"POT-Creation-Date: 2016-03-31 14:45-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,82 +18,75 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: chaser/chaser.py:92 chaser/chaser.py:103
+#: chaser/chaser.py:84
+msgid "Targets"
+msgstr ""
+
+#: chaser/chaser.py:98
+msgid "resolving dependencies..."
+msgstr ""
+
+#: chaser/chaser.py:107 chaser/chaser.py:120
 #, python-brace-format
 msgid "Package not found: {pkg}"
 msgstr ""
 
-#: chaser/chaser.py:95
-#, python-brace-format
-msgid "Targets: {packages}"
-msgstr ""
-
-#: chaser/chaser.py:96
+#: chaser/chaser.py:113
 msgid "Proceed with installation?"
 msgstr ""
 
-#: chaser/chaser.py:106
+#: chaser/chaser.py:123
 #, python-brace-format
 msgid "Edit {pkg} PKGBUILD with $EDITOR?"
 msgstr ""
 
-#: chaser/chaser.py:111
+#: chaser/chaser.py:128
 #, python-brace-format
 msgid "Edit {pkg}.install with $EDITOR?"
 msgstr ""
 
-#: chaser/chaser.py:144
-#, python-brace-format
-msgid "Updates: {pkgs}"
+#: chaser/chaser.py:163
+msgid "Checking for updates..."
 msgstr ""
 
-#: chaser/chaser.py:145
+#: chaser/chaser.py:166
 msgid "Continue with installation?"
 msgstr ""
 
-#: chaser/chaser.py:184
-#, python-brace-format
-msgid "Name           : {name}"
+#: chaser/chaser.py:209
+msgid "Name           : "
 msgstr ""
 
-#: chaser/chaser.py:185
-#, python-brace-format
-msgid "Version        : {ver}"
+#: chaser/chaser.py:210
+msgid "Version        : "
 msgstr ""
 
-#: chaser/chaser.py:186
-#, python-brace-format
-msgid "URL            : {url}"
+#: chaser/chaser.py:211
+msgid "URL            : "
 msgstr ""
 
-#: chaser/chaser.py:187
-#, python-brace-format
-msgid "Licenses       : {license}"
+#: chaser/chaser.py:212
+msgid "Licenses       : "
 msgstr ""
 
-#: chaser/chaser.py:188
-#, python-brace-format
-msgid "Category       : {cat}"
+#: chaser/chaser.py:213
+msgid "Category       : "
 msgstr ""
 
-#: chaser/chaser.py:189
-#, python-brace-format
-msgid "Votes          : {votes}"
+#: chaser/chaser.py:214
+msgid "Votes          : "
 msgstr ""
 
-#: chaser/chaser.py:190
-#, python-brace-format
-msgid "Maintainer     : {name}"
+#: chaser/chaser.py:215
+msgid "Maintainer     : "
 msgstr ""
 
-#: chaser/chaser.py:191
-#, python-brace-format
-msgid "OutOfDate      : {val}"
+#: chaser/chaser.py:216
+msgid "OutOfDate      : "
 msgstr ""
 
-#: chaser/chaser.py:192
-#, python-brace-format
-msgid "Description    : {desc}"
+#: chaser/chaser.py:217
+msgid "Description    : "
 msgstr ""
 
 #: chaser/__init__.py:15
@@ -132,10 +125,10 @@ msgstr ""
 msgid "display package information"
 msgstr ""
 
-#: chaser/prompt.py:1
+#: chaser/prompt.py:3
 msgid "y"
 msgstr ""
 
-#: chaser/prompt.py:2
+#: chaser/prompt.py:4
 msgid "n"
 msgstr ""
