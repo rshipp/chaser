@@ -14,7 +14,8 @@ setup(
     packages=['chaser'],
     scripts=['pkgvars.sh', 'pkgvars.py'],
     entry_points = {
-        'console_scripts': ['chaser = chaser:main'],
+        'console_scripts': ['chaser = chaser:main',
+                            'pchaser = chaser.pchaser:main'],
     },
     include_package_data=True,
     install_requires=[],

@@ -1,4 +1,4 @@
-__version__ = "0.9"
+__version__ = "0.9.1"
 
 import argparse
 import gettext
@@ -10,7 +10,7 @@ _ = gettext.gettext
 
 from chaser import chaser
 
-def main():
+def main(arguments=None):
     parser = argparse.ArgumentParser(
             description=_("Next-generation community package management for Chakra.")
     )
@@ -47,7 +47,7 @@ def main():
     parser_n.add_argument('package')
     parser_n.set_defaults(func=chaser.info)
 
-    args = parser.parse_args()
+    args = parser.parse_args(arguments)
     try:
         return args.func(args)
     except AttributeError:
