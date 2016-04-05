@@ -162,11 +162,7 @@ def update(args):
     print(termcolor.colored(":: ", 'blue', attrs=['bold']) + \
           termcolor.colored(_("Checking for updates..."), attrs=['bold']))
     updates = check_updates()
-    print_targets(updates)
-    response = prompt.prompt(_("Continue with installation?"), major=True)
-    if response == prompt.YES:
-        for name, ver in updates:
-            install(name)
+    return install(p for p, v in updates)
 
 def search(args):
     """Print search results"""
