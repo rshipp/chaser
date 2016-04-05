@@ -132,14 +132,6 @@ class TestChaser(unittest.TestCase):
 
     def test_update(self):
         old = (chaser.check_updates, prompt.user_input, chaser.install)
-        chaser.check_updates = lambda: [('test', '0-0')]
-        prompt.user_input = lambda x: prompt.YES
-        chaser.install = lambda x: self.assertEquals('test', x)
-        chaser.update(None)
-
-        prompt.user_input = lambda x: prompt.NO
-        chaser.install = lambda x: self.assertTrue(False)
-        chaser.update(None)
 
         chaser.check_updates = lambda: []
         prompt.user_input = lambda x: prompt.YES
