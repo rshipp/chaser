@@ -12,7 +12,7 @@ Installing
 
 Run::
 
-    ccr -S chaser
+    sudo pacman -S chaser
 
 
 .. _Chakra Community Repository: http://chakraos.org/ccr
