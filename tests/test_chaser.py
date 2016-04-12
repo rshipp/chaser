@@ -139,7 +139,10 @@ class TestChaser(unittest.TestCase):
         chaser.check_updates, prompt.user_input, chaser.install = old
 
     def test_smoke_search(self):
+        old = pacman.search
+        pacman.search = lambda x: ''
         chaser.search("test")
+        pacman.search = old
 
     def test_info_exists(self):
         self.assertNotEquals(1, chaser.info("aur2ccr"))
