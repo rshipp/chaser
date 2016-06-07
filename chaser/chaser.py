@@ -131,7 +131,11 @@ def install(args):
         # makepkg
         curdir = os.getcwd()
         os.chdir(os.path.join(workingdir, package))
-        subprocess.call(["makepkg", "-si"])
+        try:
+            subprocess.check_call(["makepkg", "-rsi"])
+        except subprocess.CalledProcessError:
+            return 1
+
         os.chdir(curdir)
 
 def check_updates(args=None):
