@@ -98,6 +98,7 @@ def install(args):
     print(_("resolving dependencies..."))
 
     editor = os.getenv('EDITOR') or 'vim'
+    # Check packages, to fail early
     packages = []
     for pkgname in pkgnames:
         try:
@@ -108,6 +109,15 @@ def install(args):
             return 1
 
         packages += dependency_chain(pkgname, workingdir)
+
+    # Check dependencies
+    for pkgname in packages:
+        try:
+            # Make sure the package exists
+            ccr.info(pkgname)
+        except ccr.PackageNotFound:
+            print(_("Package not found: {pkg}").format(pkg=pkgname))
+            return 1
 
     print_targets(packages)
     response = prompt.prompt(_("Proceed with installation?"), major=True)
