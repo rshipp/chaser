@@ -176,7 +176,11 @@ def update(args):
     print(termcolor.colored(":: ", 'blue', attrs=['bold']) + \
           termcolor.colored(_("Checking for updates..."), attrs=['bold']))
     updates = check_updates()
-    return install(p for p, v in updates)
+    if updates:
+        return install(p for p, v in updates)
+    else:
+        print(_("there is nothing to do"))
+        return 0
 
 def search(args):
     """Print search results"""
