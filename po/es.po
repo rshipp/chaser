@@ -1,0 +1,201 @@
+# Chaser translation file.
+# Do not change variables between {brackets}.
+# Copyright (C) 2015-2016 Ryan Shipp
+# This file is distributed under the same license as the Chaser package.
+# 
+# Translators:
+# Enrique Bravo <bravogon@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Chakra\n"
+"Report-Msgid-Bugs-To: chakra@rshipp.com\n"
+"POT-Creation-Date: 2016-06-24 15:17-0600\n"
+"PO-Revision-Date: 2016-06-25 09:29+0000\n"
+"Last-Translator: Adrián Chaves Fernández <adriyetichaves@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/chakra/chakra/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: chaser/chaser.py:84
+msgid "Targets"
+msgstr "Objetivos"
+
+#: chaser/chaser.py:98
+msgid "resolving dependencies..."
+msgstr "resolviendo dependencias..."
+
+#: chaser/chaser.py:108 chaser/chaser.py:119 chaser/chaser.py:130
+#, python-brace-format
+msgid "Package not found: {pkg}"
+msgstr "Paquete no encontrado: {pkg}"
+
+#: chaser/chaser.py:123
+msgid "Proceed with installation?"
+msgstr "¿Proceder a la instalación?"
+
+#: chaser/chaser.py:133
+#, python-brace-format
+msgid "Edit {pkg} PKGBUILD with $EDITOR?"
+msgstr "¿Editar el PKGBUILD de {pkg} con $EDITOR?"
+
+#: chaser/chaser.py:138
+#, python-brace-format
+msgid "Edit {pkg}.install with $EDITOR?"
+msgstr "¿Editar {pkg}.install con $EDITOR?"
+
+#: chaser/chaser.py:177
+msgid "Checking for updates..."
+msgstr "Buscando actualizaciones..."
+
+#: chaser/chaser.py:182
+msgid "there is nothing to do"
+msgstr ""
+
+#: chaser/chaser.py:223
+msgid "Name           : "
+msgstr "Nombre :"
+
+#: chaser/chaser.py:224
+msgid "Version        : "
+msgstr "Versión :"
+
+#: chaser/chaser.py:225
+msgid "URL            : "
+msgstr "URL :"
+
+#: chaser/chaser.py:226
+msgid "Licenses       : "
+msgstr "Licencias :"
+
+#: chaser/chaser.py:227
+msgid "Category       : "
+msgstr "Categoría :"
+
+#: chaser/chaser.py:228
+msgid "Votes          : "
+msgstr "Votos :"
+
+#: chaser/chaser.py:229
+msgid "Maintainer     : "
+msgstr "Mantenedor :"
+
+#: chaser/chaser.py:230
+msgid "OutOfDate      : "
+msgstr "Desactualizado :"
+
+#: chaser/chaser.py:231
+msgid "Description    : "
+msgstr "Descripción :"
+
+#: chaser/__init__.py:15 chaser/pchaser.py:35
+msgid "Next-generation community package management for Chakra."
+msgstr "Gestor de paquetes comunitarios de última generación para Chakra."
+
+#: chaser/__init__.py:20
+msgid "show version information and exit"
+msgstr "mostrar información de la versión y salir"
+
+#: chaser/__init__.py:25
+msgid "build packages in BUILD_DIR. default = "
+msgstr "construir paquetes en BUILD_DIR. Por defecto = "
+
+#: chaser/__init__.py:28
+msgid "download source files here"
+msgstr "descargar código fuente aquí"
+
+#: chaser/__init__.py:32
+msgid "install a package from the CCR"
+msgstr "instalar un paquete de CCR"
+
+#: chaser/__init__.py:36
+msgid "list available updates"
+msgstr "mostrar las actualizaciones disponibles"
+
+#: chaser/__init__.py:39
+msgid "search for and install updates for CCR packages"
+msgstr "buscar e instalar actualizaciones para paquetes de CCR"
+
+#: chaser/__init__.py:42
+msgid "search CCR packages"
+msgstr "buscar paquetes en CCR"
+
+#: chaser/__init__.py:46
+msgid "display package information"
+msgstr "mostrar información del paquete"
+
+#: chaser/pchaser.py:30
+msgid "usage: pchaser [-h] [-v] [-b BUILD_DIR]"
+msgstr "uso: pchaser [-h] [-v] [-b BUILD_DIR]"
+
+#: chaser/pchaser.py:31
+msgid "               {-G,-S,-Qu,-Syu,-Ss,-Si} ..."
+msgstr "{-G,-S,-Qu,-Syu,-Ss,-Si} ..."
+
+#: chaser/pchaser.py:36
+msgid "(Pacman-style wrapper)"
+msgstr "(Wrapper parecido a Pacman)"
+
+#: chaser/pchaser.py:38
+msgid "positional arguments:"
+msgstr "argumentos posicionales:"
+
+#: chaser/pchaser.py:39
+msgid "  {-G,-S,-Qu,-Syu,-Ss,-Si}"
+msgstr "{-G,-S,-Qu,-Syu,-Ss,-Si}"
+
+#: chaser/pchaser.py:40
+msgid "    -G                  download source files here"
+msgstr "-G descargar archivos de código fuente aquí"
+
+#: chaser/pchaser.py:41
+msgid "    -S                  install a package from the CCR"
+msgstr "-S instalar un paquete de CCR"
+
+#: chaser/pchaser.py:42
+msgid "    -Qu                 list available updates"
+msgstr "-Qu mostrar las actualizaciones disponibles"
+
+#: chaser/pchaser.py:43
+msgid ""
+"    -Syu                search for and install updates for CCR packages"
+msgstr "-Syu buscar e instalar actualizaciones para paquetes de CCR"
+
+#: chaser/pchaser.py:44
+msgid "    -Ss                 search CCR packages"
+msgstr "-Ss buscar paquetes en CCR"
+
+#: chaser/pchaser.py:45
+msgid "    -Si, -Sii           display package information"
+msgstr "-Si, -Sii mostrar información del paquete"
+
+#: chaser/pchaser.py:47
+msgid "optional arguments:"
+msgstr "argumentos opcionales:"
+
+#: chaser/pchaser.py:48
+msgid "  -h, --help            show this help message and exit"
+msgstr "-h, --help mostrar este mensaje de ayuda y salir"
+
+#: chaser/pchaser.py:49
+msgid "  -v, --version         show version information and exit"
+msgstr "-v, --version mostrar información de la versión y salir"
+
+#: chaser/pchaser.py:50
+msgid "  -b BUILD_DIR, --build-dir BUILD_DIR"
+msgstr "  -b BUILD_DIR, --build-dir BUILD_DIR"
+
+#: chaser/pchaser.py:51
+msgid ""
+"                        build packages in BUILD_DIR. default = /tmp/chaser"
+msgstr "construir paquetes en BUILD_DIR. Por defecto = /tmp/chaser"
+
+#: chaser/prompt.py:3
+msgid "y"
+msgstr "s"
+
+#: chaser/prompt.py:4
+msgid "n"
+msgstr "n"

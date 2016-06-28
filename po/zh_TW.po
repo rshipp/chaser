@@ -1,0 +1,201 @@
+# Chaser translation file.
+# Do not change variables between {brackets}.
+# Copyright (C) 2015-2016 Ryan Shipp
+# This file is distributed under the same license as the Chaser package.
+# 
+# Translators:
+# Jeff Huang <s8321414@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Chakra\n"
+"Report-Msgid-Bugs-To: chakra@rshipp.com\n"
+"POT-Creation-Date: 2016-06-24 15:17-0600\n"
+"PO-Revision-Date: 2016-06-25 12:54+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/chakra/chakra/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: chaser/chaser.py:84
+msgid "Targets"
+msgstr "目標"
+
+#: chaser/chaser.py:98
+msgid "resolving dependencies..."
+msgstr "正在解決依賴關係..."
+
+#: chaser/chaser.py:108 chaser/chaser.py:119 chaser/chaser.py:130
+#, python-brace-format
+msgid "Package not found: {pkg}"
+msgstr "找不到套件：{pkg}"
+
+#: chaser/chaser.py:123
+msgid "Proceed with installation?"
+msgstr "進行安裝？"
+
+#: chaser/chaser.py:133
+#, python-brace-format
+msgid "Edit {pkg} PKGBUILD with $EDITOR?"
+msgstr "以 $EDITOR 編輯 {pkg} PKGBUILD？"
+
+#: chaser/chaser.py:138
+#, python-brace-format
+msgid "Edit {pkg}.install with $EDITOR?"
+msgstr "以 $EDITOR 編輯 {pkg}.install？"
+
+#: chaser/chaser.py:177
+msgid "Checking for updates..."
+msgstr "正在檢查更新..."
+
+#: chaser/chaser.py:182
+msgid "there is nothing to do"
+msgstr "無事可做"
+
+#: chaser/chaser.py:223
+msgid "Name           : "
+msgstr "名稱"
+
+#: chaser/chaser.py:224
+msgid "Version        : "
+msgstr "版本："
+
+#: chaser/chaser.py:225
+msgid "URL            : "
+msgstr "URL："
+
+#: chaser/chaser.py:226
+msgid "Licenses       : "
+msgstr "授權條款："
+
+#: chaser/chaser.py:227
+msgid "Category       : "
+msgstr "分類："
+
+#: chaser/chaser.py:228
+msgid "Votes          : "
+msgstr "票數："
+
+#: chaser/chaser.py:229
+msgid "Maintainer     : "
+msgstr "維護者："
+
+#: chaser/chaser.py:230
+msgid "OutOfDate      : "
+msgstr "過期？："
+
+#: chaser/chaser.py:231
+msgid "Description    : "
+msgstr "描述："
+
+#: chaser/__init__.py:15 chaser/pchaser.py:35
+msgid "Next-generation community package management for Chakra."
+msgstr "Chakra 新一代的社群套件管理員。"
+
+#: chaser/__init__.py:20
+msgid "show version information and exit"
+msgstr "顯示版本資訊並結束"
+
+#: chaser/__init__.py:25
+msgid "build packages in BUILD_DIR. default = "
+msgstr "在 BUILD_DIR 中構建套件。預設 ="
+
+#: chaser/__init__.py:28
+msgid "download source files here"
+msgstr "下載原始檔案至本機"
+
+#: chaser/__init__.py:32
+msgid "install a package from the CCR"
+msgstr "從 CCR 安裝套件"
+
+#: chaser/__init__.py:36
+msgid "list available updates"
+msgstr "列出可用的更新"
+
+#: chaser/__init__.py:39
+msgid "search for and install updates for CCR packages"
+msgstr "搜尋並安裝 CCR 套件的更新"
+
+#: chaser/__init__.py:42
+msgid "search CCR packages"
+msgstr "搜尋 CCR 套件"
+
+#: chaser/__init__.py:46
+msgid "display package information"
+msgstr "顯示套件資訊"
+
+#: chaser/pchaser.py:30
+msgid "usage: pchaser [-h] [-v] [-b BUILD_DIR]"
+msgstr "用法：pchaser [-h] [-v] [-b BUILD_DIR]"
+
+#: chaser/pchaser.py:31
+msgid "               {-G,-S,-Qu,-Syu,-Ss,-Si} ..."
+msgstr "               {-G,-S,-Qu,-Syu,-Ss,-Si} ..."
+
+#: chaser/pchaser.py:36
+msgid "(Pacman-style wrapper)"
+msgstr "（Pacman 風格的指令）"
+
+#: chaser/pchaser.py:38
+msgid "positional arguments:"
+msgstr "位置參數："
+
+#: chaser/pchaser.py:39
+msgid "  {-G,-S,-Qu,-Syu,-Ss,-Si}"
+msgstr "  {-G,-S,-Qu,-Syu,-Ss,-Si}"
+
+#: chaser/pchaser.py:40
+msgid "    -G                  download source files here"
+msgstr "    -G                  下載來源檔案至此"
+
+#: chaser/pchaser.py:41
+msgid "    -S                  install a package from the CCR"
+msgstr "    -S                  從 CCR 安裝套件"
+
+#: chaser/pchaser.py:42
+msgid "    -Qu                 list available updates"
+msgstr "    -Qu                 列出可用的更新"
+
+#: chaser/pchaser.py:43
+msgid ""
+"    -Syu                search for and install updates for CCR packages"
+msgstr "    -Syu                搜尋並安裝 CCR 套件的更新"
+
+#: chaser/pchaser.py:44
+msgid "    -Ss                 search CCR packages"
+msgstr "    -Ss                 搜尋 CCR 套件"
+
+#: chaser/pchaser.py:45
+msgid "    -Si, -Sii           display package information"
+msgstr "    -Si, -Sii           顯示套件資訊"
+
+#: chaser/pchaser.py:47
+msgid "optional arguments:"
+msgstr "選擇性參數："
+
+#: chaser/pchaser.py:48
+msgid "  -h, --help            show this help message and exit"
+msgstr "  -h, --help            顯示此說明訊息然後結束"
+
+#: chaser/pchaser.py:49
+msgid "  -v, --version         show version information and exit"
+msgstr "  -v, --version         顯示版本資訊並結束"
+
+#: chaser/pchaser.py:50
+msgid "  -b BUILD_DIR, --build-dir BUILD_DIR"
+msgstr "  -b BUILD_DIR, --build-dir BUILD_DIR"
+
+#: chaser/pchaser.py:51
+msgid ""
+"                        build packages in BUILD_DIR. default = /tmp/chaser"
+msgstr "在 BUILD_DIR 中構建套件。預設 = /tmp/chaser"
+
+#: chaser/prompt.py:3
+msgid "y"
+msgstr "y"
+
+#: chaser/prompt.py:4
+msgid "n"
+msgstr "n"
