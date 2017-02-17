@@ -25,6 +25,10 @@ def get_source_files(args, workingdir=None):
         pkgnames = args
         workingdir = workingdir or BUILD_DIR
 
+    if os.getuid() == 0:
+        print('Downloading sources as root is not allowed. Exiting.')
+        return
+
     if not os.path.exists(workingdir):
         os.mkdir(workingdir)
 
@@ -94,6 +98,10 @@ def install(args):
     except AttributeError:
         pkgnames = args
         workingdir = BUILD_DIR
+
+    if os.getuid() == 0:
+        print('Installations as root are not allowed. Exiting.')
+        return
 
     print(_("resolving dependencies..."))
 
@@ -173,6 +181,10 @@ def list_updates(args=None):
 
 def update(args):
     """Install updates"""
+    if os.getuid() == 0:
+        print('Updates as root are not allowed. Exiting.')
+        return
+
     print(termcolor.colored(":: ", 'blue', attrs=['bold']) + \
           termcolor.colored(_("Checking for updates..."), attrs=['bold']))
     updates = check_updates()
