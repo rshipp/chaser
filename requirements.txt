@@ -1,5 +1,5 @@
 setuptools
-requests==2.20.0
+requests==2.31.0
 toposort==1.4
 git+https://github.com/ccr-tools/python-ccr.git
 termcolor==1.1.0
